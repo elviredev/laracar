@@ -25,6 +25,6 @@
   </form>
   <x-slot:footerLink>
     Already have an account? -
-    <a href="/login.html"> Click here to login </a>
+    <a href="{{ route('login') }}"> Click here to login </a>
   </x-slot:footerLink>
 </x-guest-layout>
