@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -36,12 +37,12 @@ class CarController extends Controller
   }
 
   /**
-   * @desc Affiche une car spoécifique
+   * @desc Affiche une car spécifique
    * @route GET /car/{$id}
-   * @param string $id
+   * @param Car $car
    * @return View
    */
-  public function show(string $id): View
+  public function show(Car $car): View
   {
       return view('car.show');
   }
@@ -49,10 +50,10 @@ class CarController extends Controller
   /**
    * @desc Affiche le formulaire pour modifier une car
    * @route GET /car/{$id}/edit
-   * @param string $id
+   * @param Car $car
    * @return View
    */
-  public function edit(string $id): View
+  public function edit(Car $car): View
   {
       return view('car.edit');
   }
@@ -60,7 +61,7 @@ class CarController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
+  public function update(Request $request, Car $car)
   {
       //
   }
@@ -68,7 +69,7 @@ class CarController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(string $id)
+  public function destroy(Car $car): View
   {
       //
   }
