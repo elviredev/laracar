@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
 /**
@@ -33,4 +34,13 @@ class CarFeatures extends Model
     'rear_parking_sensors',
     'leather_seats'
   ];
+
+  /**
+   * @desc Relation one-to-one avec Car : chaque ensemble de caractéristiques appartient à une seule voiture
+   * @return BelongsTo
+   */
+  public function car(): BelongsTo
+  {
+    return $this->belongsTo(Car::class);
+  }
 }

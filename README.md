@@ -1,7 +1,7 @@
 ## Laracar
 
 ### Youtube
-- Temps : 6:44:46
+- Temps : 7:30:18
 - https://www.youtube.com/watch?v=0M84Nk7iWkA&t=1598s
 
 ## Etapes
@@ -48,4 +48,25 @@
 - Relations entre les tables en bdd ORM
 - relation one-to-one entre `cars` et `car_features`
 - relation one-to-many entre `cars` et `car_images`
+- relation one-to-many entre `cars` et `car_types`
 - relation many-to-many entre `cars` et `users`
+- plusieurs relations BelongsTo ou HasMany (one-to-many) : 
+- relation one-to-many entre `cars` et `fuel_types`
+- relation one-to-many entre `cars` et `makers`
+- relation one-to-many entre `cars` et `models`
+- relation one-to-many entre `cars` et `users` (owner)
+- relation one-to-many entre `cars` et `cities`
+- relation one-to-one entre `car_features` et `cars`
+- relation one-to-many entre `car_images` et `cars`
+- relation one-to-many entre `cities` et `cars`
+- relation one-to-many entre `cities` et `states`
+- relation one-to-many entre `fuel_types` et `cars`
+- relation one-to-many entre `makers` et `cars`
+- relation one-to-many entre `makers` et `models`
+- relation one-to-many entre `models` et `cars`
+- relation one-to-many entre `models` et `makers`
+- relation one-to-many entre `states` et `cars`
+- relation one-to-many entre `states` et `cities`
+- relation one-to-many entre `users` (owner) et `cars`
+
+- Factories

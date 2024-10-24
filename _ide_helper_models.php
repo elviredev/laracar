@@ -33,6 +33,11 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\CarType $carType
+ * @property-read \App\Models\CarFeatures|null $features
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CarImage> $images
+ * @property-read int|null $images_count
+ * @property-read \App\Models\CarImage|null $primaryImage
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Car newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Car newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Car onlyTrashed()
@@ -129,6 +134,8 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Car> $cars
+ * @property-read int|null $cars_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CarType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CarType newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CarType query()

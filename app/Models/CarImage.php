@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
 /**
@@ -20,4 +21,13 @@ class CarImage extends Model
     'image_path',
     'position',
   ];
+
+  /**
+   * @desc Relation one-to-one avec Car : chaque enregistrement d'une image appartient à une seule voiture
+   * @return BelongsTo
+   */
+  public function car(): BelongsTo
+  {
+    return $this->belongsTo(Car::class);
+  }
 }
