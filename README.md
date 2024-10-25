@@ -1,7 +1,7 @@
 ## Laracar
 
 ### Youtube
-- Temps : 7:30:18
+- Temps : 8:15:55
 - https://www.youtube.com/watch?v=0M84Nk7iWkA&t=1598s
 
 ## Etapes
@@ -45,7 +45,8 @@
 - Delete plusieurs cars - Method `destroy()` 
 - Method `Car::truncate()` supprime toutes les cars définitivement de la bdd même si `SoftDeletes` dans le model Car
 - Renommer le model `CarImages` en `CarImage`
-- Relations entre les tables en bdd ORM
+
+### Relations entre les tables en bdd ORM
 - relation one-to-one entre `cars` et `car_features`
 - relation one-to-many entre `cars` et `car_images`
 - relation one-to-many entre `cars` et `car_types`
@@ -69,4 +70,34 @@
 - relation one-to-many entre `states` et `cities`
 - relation one-to-many entre `users` (owner) et `cars`
 
-- Factories
+### Factories
+- Générer une class factory pour chaque model
+- générer des données fakes
+- Factory Sequences
+- Factory States
+- Factory Callbacks
+- Factory Relationships Maker-Model - One to many : `ModelFactory` `MakerFactory` - utilisation d'une méthode magique `hasModels()` (Models vient de la relation Maker avec Model qui est "models")
+- Factory Relationships - Model avec Maker - Belongs To : methode magique `forMaker()` basée sur la relation "maker" dans Model.php
+- Créer toutes les factories : `CarTypeFactory`, `FuelTypeFactory`, `StateFactory`, `CityFactory`, `CarFactory`, `CarFeaturesFactory`, `CarImageFactory`
+- Factory Relationships - Many to many - User avec Car et relation `favouriteCars()`
+
+### Seeders
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
