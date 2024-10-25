@@ -82,6 +82,9 @@
 - Factory Relationships - Many to many - User avec Car et relation `favouriteCars()`
 
 ### Seeders
+- Créer et exécuter Seeders : `UsersSeeder`
+- On supprime `UsersSeeder` car on va créer nos data dans DatabaseSeeder
+- Créer Seed Data pour le projet dans `DatabaseSeeder`
 
 
 
