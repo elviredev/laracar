@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -13,7 +14,13 @@ class HomeController extends Controller
    */
   public function index(): View
   {
-    return view('home.index');
+    // Sélect 30 cars publiées dans le passé, trier par desc
+    $cars = Car::where('published_at', '<', now())
+      ->orderBy('published_at', 'desc')
+      ->limit(30)
+      ->get();
+
+    return view('home.index', ['cars' => $cars]);
   }
 }
 

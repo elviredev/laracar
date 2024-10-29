@@ -1,7 +1,7 @@
 ## Laracar
 
 ### Youtube
-- Temps : 8:15:55
+- Temps : 8:40:51
 - https://www.youtube.com/watch?v=0M84Nk7iWkA&t=1598s
 
 ## Etapes
@@ -86,10 +86,11 @@
 - On supprime `UsersSeeder` car on va créer nos data dans DatabaseSeeder
 - Créer Seed Data pour le projet dans `DatabaseSeeder`
 
+### Render Cars on Home Page
+- Retourner les cars dans la home page, methode inde du HomeController, index. blade et car-item.blade
+- Query Data - Différentes méthodes 
 
-
-
-
+### Render Cars on Search Page
 
 
 
