@@ -413,6 +413,7 @@
                 <x-car-item :$car />
               @endforeach
             </div>
+
             <nav class="pagination my-large">
               <a href="#" class="pagination-item">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

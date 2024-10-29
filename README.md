@@ -107,12 +107,17 @@
 - définir la route `GET /car/watchlist`
 
 ### Eager Loading
+- les performances sont dégradées quand on select des cars avec de multiples relations city(), carType() ...
+- methode with() pour remedier à ce pb connu. Les requêtes SQL sont bien moins nombreuses
 
+### Eager Loading on Home Page
+->with(['primaryImage', 'city', 'model', 'maker', 'carType', 'fuelType' ])
 
+### Eager Loading on Other Pages (search, watchlist et mycars)
+- mettre à jour avec le eager loading les méthodes `search`, `watchlist` et `index` de `CarController`
 
-
-
-
+### Database Jointures
+9:44:33
 
 
 
