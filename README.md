@@ -87,17 +87,18 @@
 - Créer Seed Data pour le projet dans `DatabaseSeeder`
 
 ### Render Cars on Home Page
-- Retourner les cars dans la home page, methode inde du HomeController, index. blade et car-item.blade
+- Retourner les cars dans la home page `index.blade.php`, methode inde du HomeController, index. blade et car-item.blade
 - Query Data - Différentes méthodes (présentation dans slides) 
 
 ### Render Cars on Search Page
-- Retourner le nombre de cars et les cars sélectionnées sur la page de recherche
+- Retourner le nombre de cars et les cars sélectionnées sur la page de recherche `search.blade;php`
 - Data Ordering (présentation dans slides) 
 
 ### Output Content on Car Details Page
+- Afficher les variables de sorties dans la page de détails `show.blade.php`
+- Pour les caractéristiques, créer un component `car-specification`
 
-
-
+### Output Content on My Cars Page
 
 
 

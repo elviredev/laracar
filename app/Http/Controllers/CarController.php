@@ -44,7 +44,7 @@ class CarController extends Controller
    */
   public function show(Car $car): View
   {
-      return view('car.show');
+      return view('car.show', ['car' => $car]);
   }
 
   /**
