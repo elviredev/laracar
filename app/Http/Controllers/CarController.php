@@ -17,7 +17,7 @@ class CarController extends Controller
   public function index(): View
   {
     // Select cars appartenant au user authentifié
-    $cars = User::find(1)
+    $cars = User::find(4)
       ->cars()
       ->orderBy('created_at', 'desc')
       ->get();
@@ -96,5 +96,18 @@ class CarController extends Controller
     $cars = $query->limit(30)->get();
 
     return view('car.search', ['cars' => $cars, 'carCount' => $carCount]);
+  }
+
+  /**
+   * @desc Afficher les favoris d'un user
+   * @route GET /car/watchlist
+   * @return View
+   */
+  public function watchlist(): View
+  {
+    // TODO we come back to this
+    $cars = User::find(4)->favouriteCars;
+
+    return view('car.watchlist', ['cars' => $cars]);
   }
 }

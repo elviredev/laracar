@@ -101,9 +101,12 @@
 ### Output Content on My Cars Page
 - afficher le contenu de la page My Cars, `car/index.blade.php`
 
-### Watchlist Page
-9:21:56
+### Watchlist Page = Page My favourite Cars
+- créer la vue `watchlist.blade.php`
+- initier methode `watchlist` dans CarController
+- définir la route `GET /car/watchlist`
 
+### Eager Loading
 
 
 
