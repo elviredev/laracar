@@ -71,7 +71,7 @@ class CarController extends Controller
    */
   public function destroy(Car $car): View
   {
-      //
+    //
   }
 
   /**
@@ -81,6 +81,13 @@ class CarController extends Controller
    */
   public function search(): View
   {
-    return view('car.search');
+    $query = Car::where('published_at', '<', now())
+      ->orderby('published_at', 'desc');
+
+    $carCount = $query->count();
+
+    $cars = $query->limit(30)->get();
+
+    return view('car.search', ['cars' => $cars, 'carCount' => $carCount]);
   }
 }

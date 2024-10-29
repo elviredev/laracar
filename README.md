@@ -88,9 +88,13 @@
 
 ### Render Cars on Home Page
 - Retourner les cars dans la home page, methode inde du HomeController, index. blade et car-item.blade
-- Query Data - Différentes méthodes 
+- Query Data - Différentes méthodes (présentation dans slides) 
 
 ### Render Cars on Search Page
+- Retourner le nombre de cars et les cars sélectionnées sur la page de recherche
+- Data Ordering (présentation dans slides) 
+
+### Output Content on Car Details Page
 
 
 
