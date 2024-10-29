@@ -99,7 +99,10 @@
 - Pour les caractéristiques, créer un component `car-specification`
 
 ### Output Content on My Cars Page
+- afficher le contenu de la page My Cars, `car/index.blade.php`
 
+### Watchlist Page
+9:21:56
 
 
 
