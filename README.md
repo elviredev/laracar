@@ -1,7 +1,6 @@
 ## Laracar
 
-### Youtube
-- Temps : 8:40:51
+### Youtube (Codeholic)
 - https://www.youtube.com/watch?v=0M84Nk7iWkA&t=1598s
 
 ## Etapes
@@ -111,13 +110,70 @@
 - methode with() pour remedier à ce pb connu. Les requêtes SQL sont bien moins nombreuses
 
 ### Eager Loading on Home Page
-->with(['primaryImage', 'city', 'model', 'maker', 'carType', 'fuelType' ])
-
+Exemple: 
+```php
+with(['primaryImage', 'city', 'model', 'maker', 'carType', 'fuelType' ])
+```
 ### Eager Loading on Other Pages (search, watchlist et mycars)
 - mettre à jour avec le eager loading les méthodes `search`, `watchlist` et `index` de `CarController`
 
 ### Database Jointures
-9:44:33
+Exemple : trier les cars par state (methode `search`)
+```php
+$query = Car::where('published_at', '<', now())
+      ->with(['primaryImage', 'city', 'model', 'maker', 'carType', 'fuelType' ])
+      ->orderby('published_at', 'desc');
+
+$query->join('cities', 'cities.id', '=', 'cars.city_id')
+  ->where('cities.state_id', 1);
+```
+ou
+```php
+$query->select('cars.*', 'cities.name as city_name');
+dd($cars[0])
+```
+### Where Clause
+- présentation de la clause Where dans slides
+- basic where clause
+- additionnal where clause
+- multiple where using grouping
+- where exists clause
+- subquery where clause
+- query debugging
+
+### Pagination
+- pagination implémenter dans `CarController` methode `search` et dans page `search.blade`
+- Plusieurs façons de personnaliser la pagination
+- Par exemple pour récupérer les différentes pagination bootstrap, tailwind etc
+```bash
+php artisan vendor:publish --tag=laravel-pagination
+```
+- on ne garde pas le dossier "vendor" car on va créer notre propre vue pour la pagination
+- créer la vue `pagination.blade`
+- ajouter la pagination sur les pages `search.blade`, `watchlist.blade` et `car/index.blade`
+- il existe aussi la single pagination `singlePaginate(15)` qui montre que "previous" et "next" et on ne peut pas utiliser dans la page la fonction `total()` qui permet de récupérer le total d'enregistrements
+
+### Customize Pagination URLs
+- méthodes pour personnaliser les URLS
+- exemple : `withPath('/user/cars)`, `appends(['sort' => 'price'])` ajoute queryParams `?sort=price`, `withQueryString()` pour préserver les query params quand on change de page et `fragment('cars')` génère un lien avec `#` `localhost:8000/car?page=3#cars`
+
+### Accessing the Request
+- accèder aux data de la requête avec `Request` de Illuminate/HTTP ou la fonction globale `request()`
+
+### Creating Response
+- exemples de response
+
+### Redirect
+Exemple : 
+- `redirect('/car/create')`, `redirect()->route('car.create')`, `redirect()->route('car.show', ['car' => 1])`, `redirect()->route('car.show', Car::first())`
+- pour rediriger en dehors du site : `redirect()->away('https://google.com')`
+
+
+
+
+
+
+
 
 
 
