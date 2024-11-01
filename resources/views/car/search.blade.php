@@ -39,67 +39,51 @@
 
             <!-- Find a car form -->
             <section class="find-a-car">
-              <form action="/s.html" method="GET" class="find-a-car-form card flex p-medium">
+              <form action="" method="GET" class="find-a-car-form card flex p-medium">
                 <div class="find-a-car-inputs">
                   <div class="form-group">
                     <label class="mb-medium">Maker</label>
-                    <x-select-maker />
+                    <x-select-maker :value="request('maker_id')" />
                   </div>
                   <div class="form-group">
                     <label class="mb-medium">Model</label>
-                    <x-select-model />
+                    <x-select-model :value="request('model_id')" />
                   </div>
                   <div class="form-group">
                     <label class="mb-medium">Type</label>
-                    <x-select-car-type />
+                    <x-select-car-type :value="request('car_type_id')" />
                   </div>
                   <div class="form-group">
                     <label class="mb-medium">Year</label>
                     <div class="flex gap-1">
-                      <input type="number" placeholder="Year From" name="year_from" />
-                      <input type="number" placeholder="Year To" name="year_to" />
+                      <input type="number" placeholder="Year From" name="year_from" value="{{ request('year_from') }}" />
+                      <input type="number" placeholder="Year To" name="year_to" value="{{ request('year_to') }}" />
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="mb-medium">Price</label>
                     <div class="flex gap-1">
-                      <input type="number" placeholder="Price From" name="price_from" />
-                      <input type="number" placeholder="Price To" name="price_to" />
+                      <input type="number" placeholder="Price From" name="price_from" value="{{ request('price_from') }}" />
+                      <input type="number" placeholder="Price To" name="price_to" value="{{ request('price_to') }}" />
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="mb-medium">Mileage</label>
                     <div class="flex gap-1">
-                      <select name="mileage">
-                        <option value="">Any Mileage</option>
-                        <option value="10000">10,000 or less</option>
-                        <option value="20000">20,000 or less</option>
-                        <option value="30000">30,000 or less</option>
-                        <option value="40000">40,000 or less</option>
-                        <option value="50000">50,000 or less</option>
-                        <option value="60000">60,000 or less</option>
-                        <option value="70000">70,000 or less</option>
-                        <option value="80000">80,000 or less</option>
-                        <option value="90000">90,000 or less</option>
-                        <option value="100000">100,000 or less</option>
-                        <option value="150000">150,000 or less</option>
-                        <option value="200000">200,000 or less</option>
-                        <option value="250000">250,000 or less</option>
-                        <option value="300000">300,000 or less</option>
-                      </select>
+                      <x-select-mileage :value="request('mileage')" />
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="mb-medium">State</label>
-                    <x-select-state />
+                    <x-select-state :value="request('state_id')" />
                   </div>
                   <div class="form-group">
                     <label class="mb-medium">City</label>
-                    <x-select-city />
+                    <x-select-city :value="request('city_id')" />
                   </div>
                   <div class="form-group">
                     <label class="mb-medium">Fuel Type</label>
-                    <x-select-fuel-type />
+                    <x-select-fuel-type :value="request('fuel_type_id')" />
                   </div>
                 </div>
                 <div class="flex">
@@ -116,11 +100,17 @@
           </div>
 
           <div class="search-cars-results">
-            <div class="car-items-listing">
-              @foreach($cars as $car)
-                <x-car-item :$car />
-              @endforeach
-            </div>
+            @if($cars->count())
+              <div class="car-items-listing">
+                @foreach($cars as $car)
+                  <x-car-item :$car />
+                @endforeach
+              </div>
+            @else
+              <div class="text-center p-large">
+                No cars were found by given criteria.
+              </div>
+            @endif
 
             {{-- Pagination --}}
             {{ $cars->onEachSide(1)->links() }}
