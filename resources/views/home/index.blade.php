@@ -89,7 +89,9 @@
   <!--/ Home Slider -->
 
   <main>
+    <!-- Search Form -->
     <x-search-form />
+
     <!-- New Cars -->
     <section>
       <div class="container">

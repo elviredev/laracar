@@ -1,9 +1,10 @@
 ## Laracar
 
-### Youtube (Codeholic)
-- https://www.youtube.com/watch?v=0M84Nk7iWkA&t=1598s
+### Cours TheCodeholic
+https://thecodeholic.com/courses/laravel-11-for-beginners/lectures/55353128
 
 ## Etapes
+
 ### Controller - Views - Routes
 - `HomeController`, method index, route home
 - Vue home/`index.blade.php`, import template html
@@ -167,6 +168,17 @@ php artisan vendor:publish --tag=laravel-pagination
 Exemple : 
 - `redirect('/car/create')`, `redirect()->route('car.create')`, `redirect()->route('car.show', ['car' => 1])`, `redirect()->route('car.show', Car::first())`
 - pour rediriger en dehors du site : `redirect()->away('https://google.com')`
+
+### Searching for Cars + Code Refactoring
+- Créer des components séparés pour Selects Maker et Model 
+- Components Dropdown pour State, City
+- Components Dropdown pour CarType, FuelType
+- Re-use Components on Search Page
+- Access Request Data
+- Implement Car Search
+- Populate Search form with Request Data
+- Show Text When no Cars are Found
+- Implement Sorting Cars
 
 
 
