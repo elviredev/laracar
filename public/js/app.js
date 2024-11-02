@@ -194,20 +194,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  /**
+   * Initialise dropdown de tri sur la page search.blade
+   */
   const initSortingDropdown = () => {
     const sortingDropdown = document.querySelector('.sort-dropdown');
     if (!sortingDropdown) return;
 
     // Init sorting dropdown with the current value
+    // Récupère l'URL actuelle et vérifie si le param de tri "sort" est déja présent
     const url = new URL(window.location.href);
     const sortValue = url.searchParams.get('sort');
+    // Si "sort" présent, la valeur est attribuée a la dropdown ce qui permet de voir l'option de tri sélectionnée
     if (sortValue) {
       sortingDropdown.value = sortValue;
     }
-
+    // Gestion du changement de tri qd nouvelle valeur est sélectionnée
     sortingDropdown.addEventListener('change', (ev) => {
       const url = new URL(window.location.href);
+      // Met à jour le param "sort" dans l'URL
       url.searchParams.set('sort', ev.target.value);
+      // Redirige la page vers cette nouvelle URL ce qui peut recharger la page avec le bon param de tri
       window.location.href = url.toString();
     });
   }

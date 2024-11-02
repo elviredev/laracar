@@ -16,11 +16,17 @@
             </button>
             <h2>Define your search criteria</h2>
           </div>
-
+          {{-- Drop down de tri --}}
           <select class="sort-dropdown">
             <option value="">Order By</option>
             <option value="price">Price Asc</option>
             <option value="-price">Price Desc</option>
+            <option value="year">Year Asc</option>
+            <option value="-year">Year Desc</option>
+            <option value="mileage">Milage Asc</option>
+            <option value="-mileage">Milage Desc</option>
+            <option value="published_at">Newest at the top</option>
+            <option value="-published_at">Oldest at the top</option>
           </select>
         </div>
         <div class="search-car-results-wrapper">

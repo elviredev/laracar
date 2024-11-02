@@ -90,7 +90,7 @@ class CarController extends Controller
    */
   public function search(Request $request): View
   {
-    // récupérer les paramètrs depuis la requête
+    // récupérer les paramètrs depuis la requête, dans URL
     $maker = $request->integer('maker_id');
     $model = $request->integer('model_id');
     $carType = $request->integer('car_type_id');
@@ -103,9 +103,12 @@ class CarController extends Controller
     $priceTo = $request->integer('price_to');
     $mileage = $request->integer('mileage');
 
+    // 1- Sorting Cars
+    // récupérer le query de tri "sort" et s'il n'existe pas, prendre "-published_at"
+    $sort = $request->input('sort', '-published_at');
+
     $query = Car::where('published_at', '<', now())
-      ->with(['primaryImage', 'model', 'maker', 'city', 'carType', 'fuelType'])
-      ->orderBy('published_at', 'desc');
+      ->with(['primaryImage', 'model', 'maker', 'city', 'carType', 'fuelType']);
 
     // appliquer un filtrage sur $query
     if ($maker) {
@@ -143,7 +146,17 @@ class CarController extends Controller
       $query->where('mileage', '<=', $mileage);
     }
 
-    $cars = $query->paginate(15);
+    // 2- Sorting Cars
+    // si "sort" commence par "-"
+    if (str_starts_with($sort, '-')) {
+      $sort = substr($sort, 1);
+      $query->orderBy($sort, 'desc');
+    } else {
+      $query->orderBy($sort);
+    }
+
+    $cars = $query->paginate(15)
+    ->withQueryString();
 
     return view('car.search', ['cars' => $cars]);
   }
