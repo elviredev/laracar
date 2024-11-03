@@ -179,7 +179,26 @@ Exemple :
 - Populate Search form with Request Data
 - Show Text When no Cars are Found
 - Implement Sorting Cars p241 
-- 
+
+### Create new car, Features and Images
+- Implement Form Submission with @csrf directive
+- Disable CSRF Validation
+- Prepare Car Create Form for Submission p248
+- Create New Car
+- Create Car Features
+- Fix bug when car without image was not rendering
+- Don't show car details page for non published car
+- Create Car Images p256
+- Modifier `config/filesystems.php` pour enlever dans 'local' "private" sur "app/private" sinon un dossier "private" va se créer automatiquement
+```php
+'local' => [
+    'driver' => 'local',
+    'root' => storage_path('app'),
+    'serve' => true,
+    'throw' => false,
+],
+```
+
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -17,7 +18,7 @@ class CarController extends Controller
   public function index(): View
   {
     // Select cars appartenant au user authentifié
-    $cars = User::find(4)
+    $cars = User::find(1)
       ->cars()
       ->with(['primaryImage', 'model', 'maker'])
       ->orderBy('created_at', 'desc')
@@ -38,10 +39,36 @@ class CarController extends Controller
 
   /**
    * Store a newly created resource in storage.
+   * @param Request $request
+   * @return RedirectResponse
    */
-  public function store(Request $request)
+  public function store(Request $request): \Illuminate\Http\RedirectResponse
   {
-      //
+    // Get request data
+    $data = $request->all();
+    // Get features data (contient les checkboxes sélectionnées)
+    $featuresData = $data['features'];
+    // Get Images (si pas d'images, créer un tableau vide)
+    $images = $request->file('images') ?: [];
+
+    // Set user ID
+    $data['user_id'] = 1;
+    // Create new car
+    $car = Car::create($data);
+
+    // Create features
+    $car->features()->create($featuresData);
+
+    // Iterate and create images
+    foreach ($images as $i => $image) {
+      // save image dans le repertoire public
+      $path = $image->store('public/images');
+      // create record in bdd
+      $car->images()->create(['image_path' => $path, 'position' => $i + 1]);
+    }
+
+    // Redirect to car.index route
+    return redirect()->route('car.index');
   }
 
   /**
@@ -52,6 +79,10 @@ class CarController extends Controller
    */
   public function show(Car $car): View
   {
+    // Ne pas afficher la page de details quand car non publiée
+    if (!$car->published_at) {
+      abort(404);
+    }
     return view('car.show', ['car' => $car]);
   }
 
