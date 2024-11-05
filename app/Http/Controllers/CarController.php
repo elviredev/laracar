@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCarRequest;
 use App\Models\Car;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\File;
 use Illuminate\View\View;
 
 class CarController extends Controller
@@ -40,31 +40,13 @@ class CarController extends Controller
 
   /**
    * Store a newly created resource in storage.
-   * @param Request $request
+   * @param StoreCarRequest $request
    * @return RedirectResponse
    */
-  public function store(Request $request): \Illuminate\Http\RedirectResponse
+  public function store(StoreCarRequest $request): \Illuminate\Http\RedirectResponse
   {
     // Get request data
-    $data = $request->validate([
-      'maker_id' => 'required',
-      'model_id' => 'required',
-      'year' => ['required', 'integer', 'min:1900', 'max:'.date('Y')],
-      'price' => 'required|integer|min:0',
-      'vin' => 'required|string|size:17',
-      'mileage' => 'required|integer|min:0',
-      'car_type_id' => 'required|exists:car_types,id',
-      'fuel_type_id' => 'required|exists:fuel_types,id',
-      'city_id' => 'required|exists:cities,id',
-      'address' => 'required|string',
-      'phone' => 'required|string|min:9',
-      'description' => 'nullable|string',
-      'published_at' => 'nullable|string',
-      'features' => 'array',
-      'features.*' => 'string',
-      'images' => 'array',
-      'images.*' => File::image()->max(2048)
-    ]);
+    $data = $request->validated();
 
     // Get features data (contient les checkboxes sélectionnées)
     $featuresData = $data['features'];

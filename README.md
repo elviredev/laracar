@@ -209,9 +209,9 @@ Exemple :
 - Project - Implement All Validation Rules 
 
 ### Form Request Validation
-- Form Request Validation p279
-- Customize Validation messages and Attributes
-- Customize Form Request Class
+- Form Request Validation : création de `StoreCarRequest`
+- Customize Validation messages and Attributes : methodes `messages()` et `attributes()`
+- Customize Form Request Class : `protected $stopOnFirstFailure = true;` `protected $redirect = '/';` ou `protected $redirectRoute = 'car.index';`
 - Working with Validated Input
 - Display Error Messages for Images
 
