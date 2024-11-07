@@ -221,12 +221,22 @@ Exemple :
 - Delete Car
 - Display Car Images
 - Update Car Image
-- Deleting Images, Change Image Positions p299
+- Deleting Images, Change Image Positions 
 - Show Add More Images Form
 - Add More Images to Car
 
+### Sessions
+- Introduction to Sessions
+- Working with Session Data
+- Session Flash Data
 
-
+### Authentication
+- Signup
+- Validating Passwords
+- Implement Login
+- Logout
+- Password Reset
+- Use Authenticated User ID
 
 
 
