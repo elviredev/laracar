@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class CarController extends Controller
@@ -90,29 +91,60 @@ class CarController extends Controller
 
   /**
    * @desc Affiche le formulaire pour modifier une car
-   * @route GET /car/{$id}/edit
+   * @route GET /car/{id}/edit
    * @param Car $car
    * @return View
    */
   public function edit(Car $car): View
   {
-      return view('car.edit');
+      return view('car.edit', ['car' => $car]);
   }
 
   /**
-   * Update the specified resource in storage.
+   * @desc Mettre à jour une car
+   * @route PUT /car/{id}
+   * @param StoreCarRequest $request
+   * @param Car $car
+   * @return RedirectResponse
    */
-  public function update(Request $request, Car $car)
+  public function update(StoreCarRequest $request, Car $car)
   {
-      //
+    $data = $request->validated();
+
+    // Get features from the data
+    $features = array_merge([
+      'abs' => 0,
+      'air_conditionning' => 0,
+      'power_windows' => 0,
+      'power_door_locks' => 0,
+      'cruise_control' => 0,
+      'bluetooth_connectivity' => 0,
+      'remote_start' => 0,
+      'gps_navigation' => 0,
+      'heated_seats' => 0,
+      'climate_control' => 0,
+      'rear_parking_sensors' => 0,
+      'leather_seats' => 0,
+    ], $data['features'] ?? []);
+
+    $car->update($data);
+
+    // Update Car Features
+    $car->features()->update($features);
+
+    return redirect()->route('car.index');
   }
 
   /**
-   * Remove the specified resource from storage.
+   * @desc Supprimer une car
+   * @route DELETE /car/{id}
+   * @param Car $car
+   * @return RedirectResponse
    */
-  public function destroy(Car $car): View
+  public function destroy(Car $car): RedirectResponse
   {
-    //
+    $car->delete();
+    return redirect()->route('car.index');
   }
 
   /**
@@ -208,5 +240,87 @@ class CarController extends Controller
       ->paginate(15);
 
     return view('car.watchlist', ['cars' => $cars]);
+  }
+
+  /**
+   * @desc Afficher la page des images
+   * @route GET /car/{id}/images
+   * @param Car $car
+   * @return View
+   */
+  public function carImages(Car $car): View
+  {
+    return view('car.images', ['car' => $car]);
+  }
+
+  /**
+   * @desc Modifier la position des images et supprimer image(s)
+   * @route PUT /car/{id}/updateImages
+   * @param Request $request
+   * @param Car $car
+   * @return RedirectResponse
+   */
+  public function updateImages(Request $request, Car $car)
+  {
+    $data = $request->validate([
+      'delete_images' => 'array',
+      'delete_images.*' => 'integer',
+      'positions' => 'array',
+      'positions.*' => 'integer',
+    ]);
+
+    // créer 2 variables. Si elle n'existe pas, retourner tableau vide
+    $deleteImages = $data['delete_images'] ?? [];
+    $positions = $data['positions'] ?? [];
+    // dd($deleteImages, $positions);
+
+    // select liste d'images to delete. car, relation images() ou "id" présent dans le tableau deleteImages
+    $imagestoDelete = $car->images()->whereIn('id', $deleteImages)->get();
+
+    // iterate over images to delete and delete them from file system
+    foreach ($imagestoDelete as $image) {
+      if (Storage::exists($image->image_path)) {
+        Storage::delete($image->image_path);
+      }
+    }
+
+    // Delete images from the database
+    $car->images()->whereIn('id', $deleteImages)->delete();
+
+    // iterate over positions and update position for each image, by its ID
+    foreach ($positions as $id => $position) {
+      $car->images()->where('id', $id)->update(['position' => $position]);
+    }
+
+    // redirect back to car.images route
+    return redirect()->back();
+  }
+
+  /**
+   * @desc Ajouter plus d'images à une car
+   * @route POST /car/{id}/addImages
+   * @param Request $request
+   * @param Car $car
+   * @return RedirectResponse
+   */
+  public function addImages(Request $request, Car $car)
+  {
+    // Get images from request
+    $images = $request->file('images') ?? [];
+
+    // Select max position of car images in bdd
+    $position = $car->images()->max('position') ?? 0;
+    foreach ($images as $image) {
+      // Save it on the file system
+      $path = $image->store('public/images');
+      // Save it in the bdd
+      $car->images()->create([
+        'image_path' => $path,
+        'position' => $position + 1,
+      ]);
+      $position++;
+    }
+
+    return redirect()->back();
   }
 }

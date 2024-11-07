@@ -215,7 +215,15 @@ Exemple :
 - Working with Validated Input
 - Display Error Messages for Images
 
-
+### Finish Car CRUD
+- Render Car Update Form
+- Update Car Details
+- Delete Car
+- Display Car Images
+- Update Car Image
+- Deleting Images, Change Image Positions p299
+- Show Add More Images Form
+- Add More Images to Car
 
 
 

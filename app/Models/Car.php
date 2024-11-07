@@ -120,7 +120,7 @@ class Car extends Model
    */
   public function images(): HasMany
   {
-    return $this->hasMany(CarImage::class);
+    return $this->hasMany(CarImage::class)->orderBy('position');
   }
 
   /**
@@ -140,5 +140,14 @@ class Car extends Model
   public function getCreateDate(): string
   {
     return (new Carbon($this->created_at))->format('Y-m-d');
+  }
+
+  /**
+   * Permet d'afficher un titre tel que 2024 - Ford Mustang
+   * @return string
+   */
+  public function getTitle()
+  {
+    return $this->year . ' - ' . $this->maker->name . ' ' . $this->model->name;
   }
 }

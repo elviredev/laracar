@@ -1,3 +1,5 @@
+@props(['car' => null])
+
 @php
   $features = [
   'air_conditionning' => 'Air Conditioning',
@@ -24,6 +26,7 @@
             type="checkbox"
             name="features[{{ $key }}]"
             value="1"
+            @checked(old('features.'.$key, $car?->features->$key))
           />
           {{ $feature }}
         </label>
