@@ -35,12 +35,13 @@
             d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-
         Add new Car
       </a>
+
+      @auth
       <div class="navbar-menu" tabindex="-1">
         <a href="javascript:void(0)" class="navbar-menu-handler">
-          My Account
+          Welcome {{ \Illuminate\Support\Facades\Auth::user()->name }}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -64,12 +65,16 @@
             <a href="{{ route('car.watchlist') }}">My Favourite Cars</a>
           </li>
           <li>
-            <form action="#" method="post">
+            <form action="{{ route('logout') }}" method="POST">
+              @csrf
               <button>Logout</button>
             </form>
           </li>
         </ul>
       </div>
+      @endauth
+
+      @guest
       <a href="{{ route('signup') }}" class="btn btn-primary btn-signup">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +90,6 @@
             d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
           />
         </svg>
-
         Signup
       </a>
       <a href="{{ route('login') }}" class="btn btn-login flex items-center">
@@ -101,6 +105,7 @@
         </svg>
         Login
       </a>
+      @endguest
     </div>
   </div>
 </header>

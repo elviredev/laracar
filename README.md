@@ -231,7 +231,8 @@ Exemple :
 - Session Flash Data
 
 ### Authentication
-- Signup
+- Signup 
+- Le password doit contenir au moins 8 caractères, au plus 24 caractères, au moins 1 nombre, au moins une minuscule et une majuscule et un symbole.
 - Validating Passwords
 - Implement Login
 - Logout
