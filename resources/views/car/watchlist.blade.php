@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Watchlist">
   <main>
     <!-- New Cars -->
     <section>

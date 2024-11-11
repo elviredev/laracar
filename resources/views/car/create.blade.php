@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Create New Car">
   <main>
   <div class="container-small">
     <h1 class="car-details-page-title">Add new car</h1>

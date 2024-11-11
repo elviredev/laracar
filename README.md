@@ -239,5 +239,13 @@ Exemple :
 - Password Reset
 - Use Authenticated User ID
 
-
+### Middlewares
+- Introduction to middlewares p333
+- Create Basic middleware
+- Grouping routes by middleware
+- Excluding Middlewares
+- Explore Core Middlewares
+- Middleware Aliases
+- Controller Middlewares
+- Email Verification
 
