@@ -19,6 +19,12 @@
           @endforeach
         </div>
 
+        @if($cars->count() === 0)
+          <div class="text-center p-large">
+            You don't have favourites cars.
+          </div>
+        @endif
+
         {{-- Pagination --}}
         {{ $cars->onEachSide(1)->links() }}
       </div>

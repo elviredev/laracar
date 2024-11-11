@@ -25,14 +25,14 @@
       </div>
     </div>
     <div class="text-right mb-medium">
-      <a href="/password-reset.html" class="auth-page-password-reset">Reset Password</a>
+      <a href="{{ route('password.request') }}" class="auth-page-password-reset">Forgot Password</a>
     </div>
 
     <button class="btn btn-primary btn-login w-full">Login</button>
-
-    <x-slot:footerLink>
-      Don't have an account? -
-      <a href="{{ route('signup') }}"> Click here to create one</a>
-    </x-slot:footerLink>
   </form>
+
+  <x-slot:footerLink>
+    Don't have an account? -
+    <a href="{{ route('signup') }}"> Click here to create one</a>
+  </x-slot:footerLink>
 </x-guest-layout>

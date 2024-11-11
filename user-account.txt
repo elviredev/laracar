@@ -1,3 +1,3 @@
-`Elvire / elvire@example.com / 12345678`
-`Totoro / totoro@example.com / 12345678`
+`Elvire / elvire@example.com / Elvire*123456`
+`Totoro / totoro@example.com / Totoro*123456`
 `John / john@example.com / John*123456`

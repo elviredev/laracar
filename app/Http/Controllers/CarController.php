@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCarRequest;
 use App\Models\Car;
-use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -15,12 +17,13 @@ class CarController extends Controller
   /**
    * @desc Affiche My Cars
    * @route GET /car
-   * @return View
+   * @param Request $request
+   * @return Factory|\Illuminate\Contracts\View\View|Application
    */
-  public function index(): View
+  public function index(Request $request)
   {
     // Select cars appartenant au user authentifié
-    $cars = User::find(1)
+    $cars = $request->user()
       ->cars()
       ->with(['primaryImage', 'model', 'maker'])
       ->orderBy('created_at', 'desc')
@@ -55,7 +58,7 @@ class CarController extends Controller
     $images = $request->file('images') ?: [];
 
     // Set user ID
-    $data['user_id'] = 1;
+    $data['user_id'] = Auth::id();
     // Create new car
     $car = Car::create($data);
 
@@ -97,7 +100,11 @@ class CarController extends Controller
    */
   public function edit(Car $car): View
   {
-      return view('car.edit', ['car' => $car]);
+    // Si car n'appartient pas au user authentifié, code 403 => forbidden
+    if ($car->user_id !== Auth::id()) {
+      abort(403);
+    }
+    return view('car.edit', ['car' => $car]);
   }
 
   /**
@@ -109,6 +116,11 @@ class CarController extends Controller
    */
   public function update(StoreCarRequest $request, Car $car)
   {
+    // Si car n'appartient pas au user authentifié, code 403 => forbidden
+    if ($car->user_id !== Auth::id()) {
+      abort(403);
+    }
+
     $data = $request->validated();
 
     // Get features from the data
@@ -144,6 +156,11 @@ class CarController extends Controller
    */
   public function destroy(Car $car): RedirectResponse
   {
+    // Si car n'appartient pas au user authentifié, code 403 => forbidden
+    if ($car->user_id !== Auth::id()) {
+      abort(403);
+    }
+
     $car->delete();
     return redirect()->route('car.index')->with('success', 'Car was deleted !');
   }
@@ -234,8 +251,7 @@ class CarController extends Controller
    */
   public function watchlist(): View
   {
-    // TODO we come back to this
-    $cars = User::find(4)
+    $cars = Auth::user()
       ->favouriteCars()
       ->with(['primaryImage', 'city', 'model', 'maker', 'carType', 'fuelType' ])
       ->paginate(15);
@@ -263,6 +279,11 @@ class CarController extends Controller
    */
   public function updateImages(Request $request, Car $car)
   {
+    // Si car n'appartient pas au user authentifié, code 403 => forbidden
+    if ($car->user_id !== Auth::id()) {
+      abort(403);
+    }
+
     $data = $request->validate([
       'delete_images' => 'array',
       'delete_images.*' => 'integer',
@@ -306,6 +327,11 @@ class CarController extends Controller
    */
   public function addImages(Request $request, Car $car)
   {
+    // Si car n'appartient pas au user authentifié, code 403 => forbidden
+    if ($car->user_id !== Auth::id()) {
+      abort(403);
+    }
+
     // Get images from request
     $images = $request->file('images') ?? [];
 
