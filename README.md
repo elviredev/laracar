@@ -240,12 +240,12 @@ Exemple :
 - Use Authenticated User ID
 
 ### Middlewares
-- Introduction to middlewares p333
+- Introduction to middlewares 
 - Create Basic middleware
 - Grouping routes by middleware
 - Excluding Middlewares
 - Explore Core Middlewares
 - Middleware Aliases
 - Controller Middlewares
-- Email Verification
+- Email Verification p341
 

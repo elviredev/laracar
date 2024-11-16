@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\EmailVerifyController;
 use Illuminate\Support\Facades\Route;
 
 // Home
@@ -12,20 +13,34 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Car
 Route::get('/car/search', [CarController::class, 'search'])->name('car.search');
-Route::get('/car/watchlist', [CarController::class, 'watchlist'])->name('car.watchlist');
 
-Route::resource('car', CarController::class);
+// Routes for user not authenticated
+Route::middleware(['guest'])->group(function () {
+  // Login, Signup
+  Route::get('/signup', [SignupController::class, 'create'])->name('signup');
+  Route::post('/signup', [SignupController::class, 'store'])->name('signup.store');
+  Route::get('/login', [LoginController::class, 'create'])->name('login');
+  Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+});
 
-Route::get('/car/{car}/images', [CarController::class, 'carImages'])->name('car.images');
-Route::put('/car/{car}/images', [CarController::class, 'updateImages'])->name('car.updateImages');
-Route::post('/car/{car}/images', [CarController::class, 'addImages'])->name('car.addImages');
+// Routes for user authenticated
+Route::middleware(['auth'])->group(function () {
+  // Middleware Verify Email
+  Route::middleware(['verified'])->group(function () {
+    Route::get('/car/watchlist', [CarController::class, 'watchlist'])->name('car.watchlist');
+    // Car
+    Route::resource('car', CarController::class)->except(['show']);
+    Route::get('/car/{car}/images', [CarController::class, 'carImages'])->name('car.images');
+    Route::put('/car/{car}/images', [CarController::class, 'updateImages'])->name('car.updateImages');
+    Route::post('/car/{car}/images', [CarController::class, 'addImages'])->name('car.addImages');
+  });
 
-// Login, Signup
-Route::get('/signup', [SignupController::class, 'create'])->name('signup');
-Route::post('/signup', [SignupController::class, 'store'])->name('signup.store');
-Route::get('/login', [LoginController::class, 'create'])->name('login');
-Route::post('/login', [LoginController::class, 'store'])->name('login.store');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+  // logout
+  Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+});
+
+// Route car.show accessible si user non authentifié
+Route::get('/car/{car}', [CarController::class, 'show'])->name('car.show');
 
 // Reset Password
 Route::get('/forgot-password', [PasswordResetController::class, 'showForgotPassword'])
@@ -36,3 +51,14 @@ Route::get('/reset-password/{token}', [PasswordResetController::class, 'showRese
   ->name('password.reset');
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])
   ->name('password.update');
+
+// Verify Email
+Route::get('/email/verify/{id}/{hash}', [EmailVerifyController::class, 'verify'])
+  ->middleware(['auth', 'signed'])
+  ->name('verification.verify');
+Route::get('/email/verify', [EmailVerifyController::class, 'notice'])
+  ->middleware('auth')
+  ->name('verification.notice');
+Route::post('/email/verification-notification', [EmailVerifyController::class, 'send'])
+  ->middleware(['auth', 'throttle:6,1'])
+  ->name('verification.send');
