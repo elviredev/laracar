@@ -76,4 +76,14 @@ class User extends Authenticatable implements MustVerifyEmail
   {
     return $this->hasMany(Car::class);
   }
+
+  /**
+   * @desc Permet d'identifier les users authentifiés avec Google ou Facebook qui n'ont pas
+   * de mdp défini en bdd donc ils ne pourront pas modifier leur email sur leur page de profil
+   * @return bool
+   */
+  public function isOauthUser (): bool
+  {
+    return !$this->password;
+  }
 }

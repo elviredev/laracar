@@ -255,3 +255,9 @@ Exemple :
 - Signup with Facebook
 
 ### Watchlist & Profile Update
+- Create Profile Page
+- Profile Update
+- Password Update
+- Create auth Routes File
+- Add & Remove Cars from Watchlist
+- Display Wich Cars are added into Watchlist
