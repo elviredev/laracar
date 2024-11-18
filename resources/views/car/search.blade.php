@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Search">
   <main>
     <!-- Found Cars -->
     <section>
@@ -106,20 +106,14 @@
           </div>
 
           <div class="search-cars-results">
-            @if($cars->count())
               <div class="car-items-listing">
                 @foreach($cars as $car)
                   <x-car-item :$car />
                 @endforeach
               </div>
-            @else
-              <div class="text-center p-large">
-                No cars were found by given criteria.
-              </div>
-            @endif
 
             {{-- Pagination --}}
-            {{ $cars->onEachSide(1)->links() }}
+            {{ $cars->onEachSide(1)->links('pagination') }}
           </div>
         </div>
       </div>

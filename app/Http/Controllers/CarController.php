@@ -173,7 +173,7 @@ class CarController extends Controller
    */
   public function search(Request $request): View
   {
-    // récupérer les paramètrs depuis la requête, dans URL
+    // récupérer les paramètres depuis la requête, dans URL
     $maker = $request->integer('maker_id');
     $model = $request->integer('model_id');
     $carType = $request->integer('car_type_id');
@@ -191,7 +191,7 @@ class CarController extends Controller
     $sort = $request->input('sort', '-published_at');
 
     $query = Car::where('published_at', '<', now())
-      ->with(['primaryImage', 'model', 'maker', 'city', 'carType', 'fuelType']);
+      ->with(['primaryImage', 'city', 'carType', 'fuelType', 'maker', 'model']);
 
     // appliquer un filtrage sur $query
     if ($maker) {

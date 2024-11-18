@@ -6,12 +6,13 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\EmailVerifyController;
+use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Car
+// Car Search
 Route::get('/car/search', [CarController::class, 'search'])->name('car.search');
 
 // Routes for user not authenticated
@@ -62,3 +63,13 @@ Route::get('/email/verify', [EmailVerifyController::class, 'notice'])
 Route::post('/email/verification-notification', [EmailVerifyController::class, 'send'])
   ->middleware(['auth', 'throttle:6,1'])
   ->name('verification.send');
+
+// Authentification avec Google ou Facebook
+Route::get('/login/oauth/{provider}', [SocialiteController::class, 'redirectToProvider'])
+  ->name('login.oauth');
+Route::get('/callback/oauth/{provider}', [SocialiteController::class, 'handleCallback']);
+
+
+
+
+

@@ -247,5 +247,11 @@ Exemple :
 - Explore Core Middlewares
 - Middleware Aliases
 - Controller Middlewares
-- Email Verification p341
+- Email Verification 
 
+### Google and Facebook Authentication
+- Implement Controllers and Routes p348
+- Signup with Google
+- Signup with Facebook
+
+### Watchlist & Profile Update
