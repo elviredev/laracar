@@ -261,3 +261,20 @@ Exemple :
 - Create auth Routes File
 - Add & Remove Cars from Watchlist p384
 - Display Wich Cars are added into Watchlist
+
+### Asset Bundling p389
+- Introduction to Vite
+- Building Assets
+- Inline Assets
+- Add to Watchlist Using Javascript
+
+### Authorization - Gates and Policies p397
+- Introduction to Authorization
+- Introduction to Gates
+- Advanced Gate Features
+- Introduction to Policies
+- Methods Without Models
+- Guest Users in Policies
+- Authorize Actions Using Policies
+- Policy Filters
+- Add Authorization Logic to all methods

@@ -27,7 +27,7 @@ class WatchlistController extends Controller
    * @desc Ajouter et Supprimer car dans les favoris
    * @route POST /watchlist/{car}
    * @param Car $car
-   * @return \Illuminate\Http\RedirectResponse
+   * @return \Illuminate\Http\JsonResponse
    */
   public function storeDestroy(Car $car)
   {
@@ -40,11 +40,19 @@ class WatchlistController extends Controller
     // Remove if it exists
     if ($carExists) {
       $user->favouriteCars()->detach($car);
-      return back()->with('success', 'Car was removed from watchlist');
+      // Response to request Axios in app.js method initAddToWatchlist()
+      return response()->json([
+        'added' => false,
+        'message' => 'Car was removed from watchlist'
+      ]);
     }
 
     // Add the car into favourite cars of the user
     $user->favouriteCars()->attach($car);
-    return back()->with('success', 'Car was added to watchlist');
+    // Response to request Axios in app.js method initAddToWatchlist()
+    return response()->json([
+      'added' => true,
+      'message' => 'Car was added to watchlist'
+    ]);
   }
 }
