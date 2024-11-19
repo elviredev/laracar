@@ -99,7 +99,10 @@
         @if($cars->count() > 0)
         <div class="car-items-listing">
           @foreach($cars as $car)
-            <x-car-item :$car />
+            <x-car-item
+              :$car
+              :is-in-watchlist="$car->favouredUsers->contains(\Illuminate\Support\Facades\Auth::user())"
+            />
           @endforeach
         </div>
         @else

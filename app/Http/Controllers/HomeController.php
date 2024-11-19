@@ -16,7 +16,7 @@ class HomeController extends Controller
   {
     // Sélect 30 cars publiées dans le passé, trier par desc
     $cars = Car::where('published_at', '<', now())
-      ->with(['primaryImage', 'city', 'model', 'maker', 'carType', 'fuelType' ])
+      ->with(['primaryImage', 'city', 'model', 'maker', 'carType', 'fuelType', 'favouredUsers' ])
       ->orderBy('published_at', 'desc')
       ->limit(30)
       ->get();

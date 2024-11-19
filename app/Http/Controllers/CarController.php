@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class CarController extends Controller
@@ -191,7 +192,7 @@ class CarController extends Controller
     $sort = $request->input('sort', '-published_at');
 
     $query = Car::where('published_at', '<', now())
-      ->with(['primaryImage', 'city', 'carType', 'fuelType', 'maker', 'model']);
+      ->with(['primaryImage', 'city', 'carType', 'fuelType', 'maker', 'model', 'favouredUsers']);
 
     // appliquer un filtrage sur $query
     if ($maker) {
@@ -202,7 +203,8 @@ class CarController extends Controller
     }
     if ($state) {
       $query->join('cities', 'cities.id', '=', 'cars.city_id')
-        ->where('cities.state_id', $state);
+        ->where('cities.state_id', $state)
+        ->select('cars.*');
     }
     if ($city) {
       $query->where('city_id', $city);
@@ -231,8 +233,8 @@ class CarController extends Controller
 
     // 2- Sorting Cars
     // si "sort" commence par "-"
-    if (str_starts_with($sort, '-')) {
-      $sort = substr($sort, 1);
+    if (Str::startsWith($sort, '-')) {
+      $sort = Str::substr($sort, 1);
       $query->orderBy($sort, 'desc');
     } else {
       $query->orderBy($sort);
@@ -244,20 +246,6 @@ class CarController extends Controller
     return view('car.search', ['cars' => $cars]);
   }
 
-  /**
-   * @desc Afficher les favoris d'un user
-   * @route GET /car/watchlist
-   * @return View
-   */
-  public function watchlist(): View
-  {
-    $cars = Auth::user()
-      ->favouriteCars()
-      ->with(['primaryImage', 'city', 'model', 'maker', 'carType', 'fuelType' ])
-      ->paginate(15);
-
-    return view('car.watchlist', ['cars' => $cars]);
-  }
 
   /**
    * @desc Afficher la page des images

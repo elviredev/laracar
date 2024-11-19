@@ -5,7 +5,7 @@ https://thecodeholic.com/courses/laravel-11-for-beginners/lectures/55353128
 
 ## Etapes
 
-### Controller - Views - Routes
+### Controller - Views - Routes p32
 - `HomeController`, method index, route home
 - Vue home/`index.blade.php`, import template html
 - coller image, css, js dans le dossier public
@@ -23,7 +23,7 @@ https://thecodeholic.com/courses/laravel-11-for-beginners/lectures/55353128
 - créer routes `/car/search` et les 7 routes pour la ressource car
 - modifier Links to pages (header.blade, car-item, search-form, login, signup)
 
-### Database
+### Database p102
 - Database Configuration
 - Migrations
 - Ajouter colonnes `phone`, `google_id`, `facebook_id` à la table `users` puis migrate:fresh (drop les tables et les créé ensuite)
@@ -47,7 +47,7 @@ https://thecodeholic.com/courses/laravel-11-for-beginners/lectures/55353128
 - Method `Car::truncate()` supprime toutes les cars définitivement de la bdd même si `SoftDeletes` dans le model Car
 - Renommer le model `CarImages` en `CarImage`
 
-### Relations entre les tables en bdd ORM
+### Relations entre les tables en bdd ORM p136
 - relation one-to-one entre `cars` et `car_features`
 - relation one-to-many entre `cars` et `car_images`
 - relation one-to-many entre `cars` et `car_types`
@@ -71,7 +71,7 @@ https://thecodeholic.com/courses/laravel-11-for-beginners/lectures/55353128
 - relation one-to-many entre `states` et `cities`
 - relation one-to-many entre `users` (owner) et `cars`
 
-### Factories
+### Factories p155
 - Générer une class factory pour chaque model
 - générer des données fakes
 - Factory Sequences
@@ -82,12 +82,12 @@ https://thecodeholic.com/courses/laravel-11-for-beginners/lectures/55353128
 - Créer toutes les factories : `CarTypeFactory`, `FuelTypeFactory`, `StateFactory`, `CityFactory`, `CarFactory`, `CarFeaturesFactory`, `CarImageFactory`
 - Factory Relationships - Many to many - User avec Car et relation `favouriteCars()`
 
-### Seeders
+### Seeders p169
 - Créer et exécuter Seeders : `UsersSeeder`
 - On supprime `UsersSeeder` car on va créer nos data dans DatabaseSeeder
 - Créer Seed Data pour le projet dans `DatabaseSeeder`
 
-### Output Data on the Website from the Database
+### Output Data on the Website from the Database p177
 - Render Cars on Home Page
 - Retourner les cars dans la home page `index.blade.php`, methode inde du HomeController, index. blade et car-item.blade
 - Query Data - Différentes méthodes (présentation dans slides) 
@@ -104,7 +104,7 @@ https://thecodeholic.com/courses/laravel-11-for-beginners/lectures/55353128
 - initier methode `watchlist` dans CarController
 - définir la route `GET /car/watchlist`
 
-### Eager Loading
+### Eager Loading p196
 - les performances sont dégradées quand on select des cars avec de multiples relations city(), carType() ...
 - methode with() pour remedier à ce pb connu. Les requêtes SQL sont bien moins nombreuses
 - Eager Loading on Home Page
@@ -129,7 +129,7 @@ ou
 $query->select('cars.*', 'cities.name as city_name');
 dd($cars[0])
 ```
-### Where Clause
+### Where Clause p205
 - présentation de la clause Where dans slides
 - basic where clause
 - additionnal where clause
@@ -138,7 +138,7 @@ dd($cars[0])
 - subquery where clause
 - query debugging
 
-### PData agination
+### Data Pagination p212
 - pagination implémenter dans `CarController` methode `search` et dans page `search.blade`
 - Plusieurs façons de personnaliser la pagination
 - Par exemple pour récupérer les différentes pagination bootstrap, tailwind etc
@@ -153,7 +153,7 @@ php artisan vendor:publish --tag=laravel-pagination
 - méthodes pour personnaliser les URLS
 - exemple : `withPath('/user/cars)`, `appends(['sort' => 'price'])` ajoute queryParams `?sort=price`, `withQueryString()` pour préserver les query params quand on change de page et `fragment('cars')` génère un lien avec `#` `localhost:8000/car?page=3#cars`
 
-### Request & Response
+### Request & Response p220
 - Accessing the Request
 - accèder aux data de la requête avec `Request` de Illuminate/HTTP ou la fonction globale `request()`
 - Creating Response
@@ -163,7 +163,7 @@ Exemple :
 - `redirect('/car/create')`, `redirect()->route('car.create')`, `redirect()->route('car.show', ['car' => 1])`, `redirect()->route('car.show', Car::first())`
 - pour rediriger en dehors du site : `redirect()->away('https://google.com')`
 
-### Searching for Cars + Code Refactoring
+### Searching for Cars + Code Refactoring p223
 - Créer des components séparés pour Selects Maker et Model 
 - Components Dropdown pour State, City
 - Components Dropdown pour CarType, FuelType
@@ -174,7 +174,7 @@ Exemple :
 - Show Text When no Cars are Found
 - Implement Sorting Cars p241 
 
-### Create new car, Features and Images
+### Form Submission - Create new car, Features and Images p243
 - Implement Form Submission with @csrf directive
 - Disable CSRF Validation
 - Prepare Car Create Form for Submission p248
@@ -193,7 +193,7 @@ Exemple :
 ],
 ```
 
-### Data Validation
+### Data Validation p258
 - Introduction to validation
 - Writing Validation Logic in `CarController`, method `store`
 - Available Validation Rules
@@ -208,14 +208,14 @@ Exemple :
 - Custom Validation Rules
 - Project - Implement All Validation Rules 
 
-### Form Request Validation
+### Form Request Validation p279
 - Form Request Validation : création de `StoreCarRequest`
 - Customize Validation messages and Attributes : methodes `messages()` et `attributes()`
 - Customize Form Request Class : `protected $stopOnFirstFailure = true;` `protected $redirect = '/';` ou `protected $redirectRoute = 'car.index';`
 - Working with Validated Input
 - Display Error Messages for Images
 
-### Finish Car CRUD
+### Finish Car CRUD p285
 - Render Car Update Form
 - Update Car Details
 - Delete Car
@@ -225,12 +225,12 @@ Exemple :
 - Show Add More Images Form
 - Add More Images to Car
 
-### Sessions
+### Sessions p305
 - Introduction to Sessions
 - Working with Session Data
 - Session Flash Data
 
-### Authentication
+### Authentication p311
 - Signup 
 - Le password doit contenir au moins 8 caractères, au plus 24 caractères, au moins 1 nombre, au moins une minuscule et une majuscule et un symbole.
 - Validating Passwords
@@ -239,7 +239,7 @@ Exemple :
 - Password Reset
 - Use Authenticated User ID
 
-### Middlewares
+### Middlewares p333
 - Introduction to middlewares 
 - Create Basic middleware
 - Grouping routes by middleware
@@ -249,15 +249,15 @@ Exemple :
 - Controller Middlewares
 - Email Verification 
 
-### Google and Facebook Authentication
-- Implement Controllers and Routes p348
+### Google and Facebook Authentication p348
+- Implement Controllers and Routes 
 - Signup with Google
 - Signup with Facebook
 
-### Watchlist & Profile Update
+### Watchlist & Profile Update p372
 - Create Profile Page
 - Profile Update
 - Password Update
 - Create auth Routes File
-- Add & Remove Cars from Watchlist
+- Add & Remove Cars from Watchlist p384
 - Display Wich Cars are added into Watchlist

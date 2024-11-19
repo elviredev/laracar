@@ -29,11 +29,7 @@
           <input type="number" placeholder="Year To" name="year_to" />
         </div>
         <div>
-          <input
-            type="number"
-            placeholder="Price From"
-            name="price_from"
-          />
+          <input type="number" placeholder="Price From" name="price_from" />
         </div>
         <div>
           <input type="number" placeholder="Price To" name="price_to" />

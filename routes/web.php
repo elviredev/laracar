@@ -3,6 +3,7 @@
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WatchlistController;
 use Illuminate\Support\Facades\Route;
 
 // Home
@@ -17,8 +18,11 @@ Route::get('/car/search', [CarController::class, 'search'])
 Route::middleware(['auth'])->group(function () {
   // Middleware Verify Email
   Route::middleware(['verified'])->group(function () {
-    Route::get('/car/watchlist', [CarController::class, 'watchlist'])
-      ->name('car.watchlist');
+    // Watchlist
+    Route::get('/watchlist', [WatchlistController::class, 'index'])
+      ->name('watchlist.index');
+    Route::post('/watchlist/{car}', [WatchlistController::class, 'storeDestroy'])
+      ->name('watchlist.storeDestroy');
 
     // Car
     Route::resource('car', CarController::class)

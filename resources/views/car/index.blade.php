@@ -70,14 +70,14 @@
                       images
                     </a>
                     <form
-                      onclick="return confirm('Are you sure you want ti delete this car ?')"
                       action="{{ route('car.destroy', $car) }}"
                       method="POST"
                       class="inline-flex"
                     >
                       @csrf
                       @method('DELETE')
-                      <button class="btn btn-delete inline-flex items-center">
+                      <button onclick="return confirm('Are you sure you want to delete this car ?')"
+                              class="btn btn-delete inline-flex items-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
