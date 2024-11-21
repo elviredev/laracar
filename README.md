@@ -1,7 +1,10 @@
 ## Laracar
 
 ### Cours TheCodeholic
-https://thecodeholic.com/courses/laravel-11-for-beginners/lectures/55353128
+https://thecodeholic.com/courses/enrolled
+
+## Documentation
+- Voir livrable pdf
 
 ## Etapes
 

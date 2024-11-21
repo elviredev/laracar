@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCarRequest;
 use App\Models\Car;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -37,19 +39,25 @@ class CarController extends Controller
    * @desc Affiche le formulaire pour créer une nouvelle car
    * @route GET /car/create
    * @return View
+   * @throws AuthorizationException
    */
   public function create(): View
   {
-      return view('car.create');
+    Gate::authorize('create', Car::class);
+    return view('car.create');
   }
 
   /**
    * Store a newly created resource in storage.
    * @param StoreCarRequest $request
    * @return RedirectResponse
+   * @throws AuthorizationException
    */
-  public function store(StoreCarRequest $request): \Illuminate\Http\RedirectResponse
+  public function store(StoreCarRequest $request): RedirectResponse
   {
+    // policy "create" autorise la création d'une nouvelle car
+    Gate::authorize('create', Car::class);
+
     // Get request data
     $data = $request->validated();
 
@@ -98,13 +106,12 @@ class CarController extends Controller
    * @route GET /car/{id}/edit
    * @param Car $car
    * @return View
+   * @throws AuthorizationException
    */
   public function edit(Car $car): View
   {
-    // Si car n'appartient pas au user authentifié, code 403 => forbidden
-    if ($car->user_id !== Auth::id()) {
-      abort(403);
-    }
+    // Si car appartient au user authentifié, ok pour modifier car sinon 404
+    Gate::authorize('update', $car);
     return view('car.edit', ['car' => $car]);
   }
 
@@ -114,13 +121,12 @@ class CarController extends Controller
    * @param StoreCarRequest $request
    * @param Car $car
    * @return RedirectResponse
+   * @throws AuthorizationException
    */
   public function update(StoreCarRequest $request, Car $car)
   {
-    // Si car n'appartient pas au user authentifié, code 403 => forbidden
-    if ($car->user_id !== Auth::id()) {
-      abort(403);
-    }
+    // Si car appartient au user authentifié, ok pour modifier car sinon 404
+    Gate::authorize('update', $car);
 
     $data = $request->validated();
 
@@ -154,13 +160,12 @@ class CarController extends Controller
    * @route DELETE /car/{id}
    * @param Car $car
    * @return RedirectResponse
+   * @throws AuthorizationException
    */
   public function destroy(Car $car): RedirectResponse
   {
-    // Si car n'appartient pas au user authentifié, code 403 => forbidden
-    if ($car->user_id !== Auth::id()) {
-      abort(403);
-    }
+    // Si car appartient au user authentifié, ok pour supprimer car sinon 404
+    Gate::authorize('delete', $car);
 
     $car->delete();
     return redirect()->route('car.index')->with('success', 'Car was deleted !');
@@ -246,15 +251,17 @@ class CarController extends Controller
     return view('car.search', ['cars' => $cars]);
   }
 
-
   /**
    * @desc Afficher la page des images
    * @route GET /car/{id}/images
    * @param Car $car
    * @return View
+   * @throws AuthorizationException
    */
   public function carImages(Car $car): View
   {
+    // seul le user autorisé à modifier une car peut accéder aux images
+    Gate::authorize('update', $car);
     return view('car.images', ['car' => $car]);
   }
 
@@ -264,13 +271,12 @@ class CarController extends Controller
    * @param Request $request
    * @param Car $car
    * @return RedirectResponse
+   * @throws AuthorizationException
    */
   public function updateImages(Request $request, Car $car)
   {
-    // Si car n'appartient pas au user authentifié, code 403 => forbidden
-    if ($car->user_id !== Auth::id()) {
-      abort(403);
-    }
+    // seul le user autorisé à modifier une car peut modifier les images
+    Gate::authorize('update', $car);
 
     $data = $request->validate([
       'delete_images' => 'array',
@@ -312,13 +318,12 @@ class CarController extends Controller
    * @param Request $request
    * @param Car $car
    * @return RedirectResponse
+   * @throws AuthorizationException
    */
   public function addImages(Request $request, Car $car)
   {
-    // Si car n'appartient pas au user authentifié, code 403 => forbidden
-    if ($car->user_id !== Auth::id()) {
-      abort(403);
-    }
+    // seul le user autorisé à modifier une car peut ajouter des images
+    Gate::authorize('update', $car);
 
     // Get images from request
     $images = $request->file('images') ?? [];
