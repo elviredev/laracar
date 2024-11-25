@@ -18,7 +18,7 @@
                 Type, etc...
               </p>
 
-              <button class="btn btn-hero-slider">Find the car</button>
+              <a href="{{ route('car.search') }}" class="btn btn-hero-slider">Find the car</a>
             </div>
           </div>
           <div class="slide-image">
@@ -40,7 +40,7 @@
                 upload photos and the perfect buyer will find it...
               </p>
 
-              <button class="btn btn-hero-slider">Add Your Car</button>
+              <a href="{{ route('car.create') }}" class="btn btn-hero-slider">Add Your Car</a>
             </div>
           </div>
           <div class="slide-image">

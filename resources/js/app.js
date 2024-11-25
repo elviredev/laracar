@@ -253,10 +253,43 @@ document.addEventListener("DOMContentLoaded", function () {
           alert(response.data.message)
         })
           .catch(error => {
-            alert("Internal Server Error. Please Try again later!")
+            console.error(error.response)
+            // si error.response existe et si error.response.status = 401
+            if (error?.response?.status === 401) {
+              alert("Please authenticate first to add cars into watchlist.")
+            } else {
+              alert("Internal Server Error. Please Try again later!")
+            }
           })
       })
     })
+  }
+
+  /**
+   * Permet d'afficher le n° de tél en entier sur la page car détails
+   */
+  const initShowPhoneNumber = () => {
+    // Select the element we need to listen to click
+    const span = document.querySelector('.car-details-phone-view')
+
+    span.addEventListener('click', ev => {
+      ev.preventDefault()
+      // Get the url on which we should make Ajax request
+      const url = span.dataset.url
+      // Make the request to the server and fetch phone number
+      axios.post(url).then(response => {
+        // Get response from backend and take actual phone number
+        const phone = response.data.phone
+        // Find the <a> element
+        const a = span.parentElement
+        // and update its href attribute with full phone number received from backend
+        a.href = 'tel:' + phone
+        // Recherchez l'élément qui contient du texte obscurci et le mettre à jour
+        const phoneElt = a.querySelector('.text-phone')
+        phoneElt.innerText = phone
+      })
+    })
+
   }
 
   initSlider();
@@ -268,6 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initCascadingDropdown('#stateSelect', '#citySelect');
   initSortingDropdown()
   initAddToWatchlist()
+  initShowPhoneNumber()
 
   ScrollReveal().reveal(".hero-slide.active .hero-slider-title", {
     delay: 200,

@@ -14,7 +14,8 @@ class CarPolicy
      */
     public function create(User $user): bool
     {
-        return !!$user->phone; // convertit l'existence du tel en true ou false
+      // convertit l'existence du tel en true ou false.
+      return !!$user->phone;
     }
 
     /**

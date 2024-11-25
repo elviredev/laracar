@@ -150,4 +150,15 @@ class Car extends Model
   {
     return $this->year . ' - ' . $this->maker->name . ' ' . $this->model->name;
   }
+
+  /**
+   * @desc Cette voiture est mise en favori par cet utilisateur ou pas.
+   * Pour prendre en compte un Guest, on ajoute "null" par défaut
+   * @param User|null $user
+   * @return mixed
+   */
+  public function isInWatchlist (User $user = null)
+  {
+    return $this->favouredUsers->contains($user);
+  }
 }

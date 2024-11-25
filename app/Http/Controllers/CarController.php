@@ -38,12 +38,15 @@ class CarController extends Controller
   /**
    * @desc Affiche le formulaire pour créer une nouvelle car
    * @route GET /car/create
-   * @return View
-   * @throws AuthorizationException
    */
-  public function create(): View
+  public function create()
   {
-    Gate::authorize('create', Car::class);
+    // Si user authentifié est non autorisé à créer une car, redirect vers
+    // son profil pour ajouter un n° de tél
+    if (!Gate::allows('create', Car::class)) {
+      return redirect()->route('profile.index')
+                       ->with('warning', 'Please provide phone number');
+    }
     return view('car.create');
   }
 
@@ -56,7 +59,12 @@ class CarController extends Controller
   public function store(StoreCarRequest $request): RedirectResponse
   {
     // policy "create" autorise la création d'une nouvelle car
-    Gate::authorize('create', Car::class);
+    // si user authentifié non autorisé à créer une car, il est redirigé pour
+    // ajouter son n° de tél dans son profile
+    if (!Gate::allows('create', Car::class)) {
+      return redirect()->route('profile.index')
+        ->with('warning', 'Please provide phone number');
+    }
 
     // Get request data
     $data = $request->validated();
@@ -342,5 +350,16 @@ class CarController extends Controller
     }
 
     return redirect()->back()->with('success', 'New images were added !');
+  }
+
+  /**
+   * @desc Permet de récupérer le n° de tél. correspondant au proprio d'une car
+   * @route POST /car/phone/{car}
+   * @param Car $car
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function showPhone(Car $car)
+  {
+    return response()->json(['phone' => $car->phone]);
   }
 }

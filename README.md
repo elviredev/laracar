@@ -281,3 +281,17 @@ Exemple :
 - Authorize Actions Using Policies
 - Policy Filters
 - Add Authorization Logic to all methods
+
+### Project Improvments p409
+- Fix creating new car state_id bug
+- Fix bug of adding car into watchlist
+- Read full phone number
+- Redirect user to profile page if phone is null
+- Show "There are no cars" text on Home Page
+- Fix error on car details page if user is guest
+- Update composer packages
+- Fix URL for "Manage your images from here"
+- Change Home Page Slider Button
+
+
+### Helpers p420

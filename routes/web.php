@@ -16,7 +16,7 @@ Route::get('/car/search', [CarController::class, 'search'])
 
 // Routes for user authenticated
 Route::middleware(['auth'])->group(function () {
-  // Middleware Verify Email
+  // Middleware Verify Email User
   Route::middleware(['verified'])->group(function () {
     // Watchlist
     Route::get('/watchlist', [WatchlistController::class, 'index'])
@@ -44,9 +44,11 @@ Route::middleware(['auth'])->group(function () {
     ->name('profile.updatePassword');
 });
 
-// Route car.show accessible si user non authentifié
+// Routes accessibles si user non authentifié, pour tous les utitlisateurs
 Route::get('/car/{car}', [CarController::class, 'show'])
   ->name('car.show');
+Route::post('/car/phone/{car}', [CarController::class, 'showPhone'])
+  ->name('car.showPhone');
 
 require_once __DIR__ . '/auth.php';
 
