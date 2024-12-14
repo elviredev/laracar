@@ -6,18 +6,23 @@ use App\Models\Maker;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
 
 class SelectMaker extends Component
 {
-  public Collection $makers;
+  public ?Collection $makers;
 
   /**
    * Create a new component instance.
    */
   public function __construct()
   {
-      $this->makers = Maker::orderBy('name')->get();
+    // Mise en cache de "makers". Si elle n'existe pas dans le cache, on fait
+    // un select en bdd et on met les données dans le cache
+    $this->makers = Cache::rememberForever('makers', function () {
+      return Maker::orderBy('name')->get();
+    });
   }
 
   /**
@@ -25,6 +30,6 @@ class SelectMaker extends Component
    */
   public function render(): View|Closure|string
   {
-      return view('components.select-maker');
+    return view('components.select-maker');
   }
 }

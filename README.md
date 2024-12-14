@@ -293,5 +293,27 @@ Exemple :
 - Fix URL for "Manage your images from here"
 - Change Home Page Slider Button
 
-
 ### Helpers p420
+- Array Helper functions
+- Introduction to Helpers
+- Number Helper Functions
+- Objects, Paths Helper functions
+- URL and Misc Helper functions
+- String Helpers
+
+### Laravel Debug Bar p428
+- Installation of Debug Bar
+- Explore Debug Bar Interface
+- Detect lazy Loading Problems with debug Bar
+- Explore other features with debug bar
+
+### Caching p430
+- Introduction to caching
+- Store cache data
+- Retrieving info from cache
+- Delete data from cache
+- Using cache helper function
+- Caching for dropdown data
+- Implement caching Home Page
+
+### Testing
